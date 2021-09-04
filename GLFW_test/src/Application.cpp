@@ -6,33 +6,13 @@
 #include <string>
 #include <sstream>
 
-#define ASSERT(x) if (!(x)) __debugbreak();
-#define GLCall(x)\
-	GLCleaerError();\
-	x;\
-	ASSERT(GLLogCall(#x, __FILE__, __LINE__));
+#include "Renderer.h"
 
 struct ShaderProgramSource
 {
     std::string VertexSource;
     std::string FragmentSource;
-};
-
-static void GLCleaerError()
-{
-    while (glGetError() != GL_NO_ERROR);
-}
-
-static bool GLLogCall(const char* function, const char* file, int line)
-{
-	while (GLenum error = glGetError())
-	{
-        std::cout << "[OpenGl Error] (" << error << "): " << function <<
-            " " << file << ":" << line << std::endl;
-        return false;
-	}
-    return true;
-}
+};  
 
 static ShaderProgramSource ParseShader(const std::string& filepath)
 {
